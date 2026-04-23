@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Recommendation  -Kissan Connect</title>
+  <link rel="stylesheet" href="/static/css/global.css">
+  <style>
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media(max-width:600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 4px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .input-hint {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 5px;
+    }
+
+    .state-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(245, 200, 66, 0.1);
+      border: 1px solid rgba(245, 200, 66, 0.25);
+      color: var(--accent-gold);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .result-box {
+      margin-top: 32px;
+      padding: 28px;
+      border-radius: var(--radius-md);
+      background: rgba(76, 175, 80, 0.06);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      text-align: center;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .result-crop {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent-neon);
+      display: block;
+      margin-top: 8px;
+    }
+
+    .result-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    .error-result {
+      background: rgba(231, 76, 60, 0.08);
+      border-color: rgba(231, 76, 60, 0.25);
+    }
+
+    .error-result .result-crop {
+      color: #ff6b6b;
+      font-size: 1rem;
+    }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid rgba(255, 255, 255, 0.08);
+      border-top-color: var(--accent-green);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 20px;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+
+<body>
+  <script src="/static/js/navbar-component.js"></script>
+
+  <div class="main-container">
+    <h1>🌾 Crop Recommendation</h1>
+    <p style="color:var(--text-muted); margin-bottom:40px; max-width:620px;">
+      Enter your soil parameters and climate conditions. Our AI model trained on agronomic data will recommend the most
+      suitable crop for your field.
+    </p>
+
+    <div class="glass-panel" style="max-width:820px; margin:0 auto;">
+      <form method="POST" action="/crop-predictor" id="cropForm">
+
+        <!-- State preset -->
+        <div class="form-group" style="margin-bottom:28px;">
+          <label for="stateSelect">Quick-fill by State <span class="state-tag">Auto-fills NPK</span></label>
+          <select id="stateSelect" onchange="setNPK()">
+            <option value=""> -Select your state to auto-fill soil values -</option>
+            <option value="Custom">Custom Values</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Assam">Assam</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+          </select>
+        </div>
+
+        <div class="section-divider">Soil Nutrients (ppm)</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="N">Nitrogen (N)</label>
+            <input type="number" name="N" id="N" placeholder="e.g. 90" min="0" max="500" required>
+            <div class="input-hint">Typical range: 0 – 300 ppm</div>
+          </div>
+          <div class="form-group">
+            <label for="P">Phosphorus (P)</label>
+            <input type="number" name="P" id="P" placeholder="e.g. 42" min="0" max="300" required>
+            <div class="input-hint">Typical range: 0 – 150 ppm</div>
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label for="K">Potassium (K)</label>
+            <input type="number" name="K" id="K" placeholder="e.g. 43" min="0" max="800" required>
+            <div class="input-hint">Typical range: 0 – 500 ppm</div>
+          </div>
+        </div>
+
+        <div class="section-divider">Climate Conditions</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="temperature">Temperature (°C)</label>
+            <input type="number" name="temperature" id="temperature" step="0.1" placeholder="e.g. 26.5" required>
+            <div class="input-hint">Current soil / air temperature</div>
+          </div>
+          <div class="form-group">
+            <label for="humidity">Humidity (%)</label>
+            <input type="number" name="humidity" id="humidity" step="0.1" placeholder="e.g. 82" min="0" max="100"
+              required>
+            <div class="input-hint">Relative humidity 0 – 100%</div>
+          </div>
+          <div class="form-group">
+            <label for="ph">Soil pH</label>
+            <input type="number" name="ph" id="ph" step="0.1" placeholder="e.g. 6.5" min="0" max="14" required>
+            <div class="input-hint">Most crops prefer 6.0 – 7.5</div>
+          </div>
+          <div class="form-group">
+            <label for="rainfall">Rainfall (mm)</label>
+            <input type="number" name="rainfall" id="rainfall" step="0.1" placeholder="e.g. 202" required>
+            <div class="input-hint">Annual or seasonal rainfall</div>
+          </div>
+        </div>
+
+        <div id="loadingDiv" style="display:none; text-align:center; margin:20px 0;">
+          <div class="spinner"></div>
+          <p style="color:var(--text-muted); font-size:0.9rem;">Analyzing soil conditions…</p>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submitBtn" style="margin-top:8px;">
+          Get Crop Recommendation
+        </button>
+      </form>
+
+      {% if crop %}
+      {% if crop.startswith('Error') %}
+      <div class="result-box error-result">
+        <span style="font-size:1.5rem;"> </span>
+        <span class="result-crop">{{ crop }}</span>
+      </div>
+      {% else %}
+      <div class="result-box">
+        <span style="color:var(--text-muted); font-size:0.9rem; font-weight:500;">RECOMMENDED CROP</span>
+        <span class="result-crop">{{ crop | title }}</span>
+        <div class="result-sub">Based on your soil and climate parameters  -this crop has the highest probability of
+          success in your field.</div>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    const stateNPK = {
+      "Punjab": [275, 30, 375], "Haryana": [200, 33, 425], "Uttar Pradesh": [250, 30, 325],
+      "Maharashtra": [175, 30, 500], "Tamil Nadu": [215, 25, 375], "Karnataka": [175, 28, 425],
+      "Andhra Pradesh": [205, 23, 325], "Gujarat": [225, 30, 400], "West Bengal": [175, 23, 375],
+      "Bihar": [200, 15, 300], "Rajasthan": [175, 33, 425], "Madhya Pradesh": [225, 28, 400],
+      "Chhattisgarh": [200, 23, 325], "Odisha": [175, 23, 300], "Assam": [205, 23, 275],
+      "Kerala": [225, 15, 350], "Uttarakhand": [175, 25, 375], "Himachal Pradesh": [150, 20, 275]
+    };
+    function setNPK() {
+      const s = document.getElementById('stateSelect').value;
+      if (stateNPK[s]) {
+        document.getElementById('N').value = stateNPK[s][0];
+        document.getElementById('P').value = stateNPK[s][1];
+        document.getElementById('K').value = stateNPK[s][2];
+      } else if (s === 'Custom') {
+        ['N', 'P', 'K'].forEach(id => document.getElementById(id).value = '');
+      }
+    }
+    document.getElementById('cropForm').addEventListener('submit', function () {
+      document.getElementById('loadingDiv').style.display = 'block';
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Processing…';
+    });
+  </script>
+  <script src="/static/js/fretbot-chat-widget.js"></script>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Kissan Connect · Built for Indian Farmers</span>
+      <span style="display:flex;gap:20px;">
+        <a href="/">Home</a>
+        <a href="/crop-predictor">Crop Rec</a>
+        <a href="/disease-predictor">Disease</a>
+        <a href="/yield-predictor">Yield</a>
+        <a href="/about">About</a>
+      </span>
+    </div>
+  </footer>
+
+</body>
+
+</html>

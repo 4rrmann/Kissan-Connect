@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disease Detector  -Kissan Connect</title>
+  <link rel="stylesheet" href="/static/css/global.css">
+  <style>
+    .upload-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      border: 2px dashed rgba(76, 175, 80, 0.25);
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      background: rgba(76, 175, 80, 0.02);
+      cursor: pointer;
+      position: relative;
+      min-height: 220px;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: var(--accent-green);
+      background: rgba(76, 175, 80, 0.06);
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.1);
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .upload-icon {
+      font-size: 52px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 12px rgba(76, 175, 80, 0.4));
+    }
+
+    .upload-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .upload-hint {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .supported-crops {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+      justify-content: center;
+    }
+
+    .crop-pill {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      color: var(--accent-green);
+    }
+
+    .preview-img {
+      max-width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      display: block;
+      margin: 0 auto 28px;
+    }
+
+    .pred-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-neon);
+      text-align: center;
+    }
+
+    .conf-bar-wrap {
+      margin: 16px 0 28px;
+    }
+
+    .conf-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .conf-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .conf-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-neon));
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    .treatment-box {
+      background: rgba(76, 175, 80, 0.04);
+      border-left: 3px solid var(--accent-green);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 22px 24px;
+      margin-top: 28px;
+    }
+
+    .treatment-box h3 {
+      color: var(--accent-green);
+      margin-bottom: 14px;
+    }
+
+    .treatment-box li {
+      padding: 6px 0 6px 20px;
+      position: relative;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .treatment-box li::before {
+      content: '✓';
+      color: var(--accent-green);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    .error-box {
+      background: rgba(231, 76, 60, 0.08);
+      border: 1px solid rgba(231, 76, 60, 0.25);
+      color: #ff6b6b;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.08);
+      border-top-color: var(--accent-green);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script src="/static/js/navbar-component.js"></script>
+
+  <div class="main-container">
+    <h1>  Disease Detector</h1>
+    <p style="color:var(--text-muted); margin-bottom:40px; max-width:600px;">Upload a photo of your crop leaf. Our AI
+      identifies 23 disease classes across Corn, Cotton, Jute, Rice, Sugarcane and Wheat.</p>
+
+    {% if error %}
+    <div class="error-box">  {{ error }}</div>
+    {% endif %}
+
+    <div class="glass-panel" style="max-width:700px; margin:0 auto;">
+      <form method="POST" enctype="multipart/form-data" id="diseaseForm">
+        <div class="upload-zone" id="dropZone">
+          <div class="upload-icon">🌿</div>
+          <div class="upload-label">Drop your crop photo here</div>
+          <div class="upload-hint">or click to browse  -JPG, PNG, WEBP supported</div>
+          <div id="fileNameDisplay"
+            style="margin-top:12px; color:var(--accent-green); font-weight:500; font-size:0.9rem;"></div>
+          <input type="file" name="image" accept="image/*" required id="fileInput">
+        </div>
+
+        <div class="supported-crops">
+          <span class="crop-pill">Corn</span>
+          <span class="crop-pill">Cotton</span>
+          <span class="crop-pill">Jute</span>
+          <span class="crop-pill">Rice</span>
+          <span class="crop-pill">Sugarcane</span>
+          <span class="crop-pill">Wheat</span>
+        </div>
+        <p style="text-align:center; color:var(--text-dim); font-size:0.78rem; margin-top:14px;">
+          23 disease classes · HOG + SVM/MLP model · No TensorFlow required<br>
+          For maximum accuracy train with
+          <a href="https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset" target="_blank" rel="noopener"
+            style="color:var(--accent-green); text-decoration:none;">PlantVillage dataset</a>
+        </p>
+
+        <div id="loadingDiv" style="display:none; text-align:center; margin:24px 0;">
+          <div class="spinner"></div>
+          <p style="color:var(--text-muted);">Analyzing your crop image...</p>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submitBtn" disabled
+          style="margin-top:24px; opacity:0.5; cursor:not-allowed;">
+          Detect Disease
+        </button>
+      </form>
+    </div>
+
+    {% if prediction %}
+    <div class="glass-panel" style="max-width:700px; margin:32px auto 0;">
+      <img src="{{ image_url }}" alt="Analyzed crop" class="preview-img">
+      <div class="pred-name">{{ prediction }}</div>
+      <div class="conf-bar-wrap">
+        <div class="conf-label">
+          <span>Confidence</span>
+          <span>{{ confidence|round(1) }}%</span>
+        </div>
+        <div class="conf-bar">
+          <div class="conf-fill" style="width: {{ confidence|round(1) }}%;"></div>
+        </div>
+      </div>
+      <div class="treatment-box">
+        <h3> Recommended Treatment</h3>
+        <ul style="list-style:none; padding:0;">
+          <li>Remove and destroy all infected plant parts immediately</li>
+          <li>Apply appropriate fungicide/bactericide every 7–10 days</li>
+          <li>Improve air circulation; avoid overhead watering</li>
+          <li>Consult your nearest Krishi Vigyan Kendra (KVK) for specific guidance</li>
+          <li>Rotate crops next season to break disease cycles</li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const dropZone = document.getElementById('dropZone');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+    fileInput.addEventListener('change', function () {
+      if (this.files.length > 0) {
+        fileNameDisplay.textContent = '📎 ' + this.files[0].name;
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+      }
+    });
+
+    document.getElementById('diseaseForm').addEventListener('submit', function () {
+      document.getElementById('loadingDiv').style.display = 'block';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+    });
+
+    ['dragenter', 'dragover'].forEach(e => dropZone.addEventListener(e, ev => {
+      ev.preventDefault(); ev.stopPropagation(); dropZone.classList.add('drag-over');
+    }));
+    ['dragleave', 'drop'].forEach(e => dropZone.addEventListener(e, ev => {
+      ev.preventDefault(); ev.stopPropagation(); dropZone.classList.remove('drag-over');
+    }));
+    dropZone.addEventListener('drop', ev => {
+      const files = ev.dataTransfer.files;
+      if (files.length) { fileInput.files = files; fileInput.dispatchEvent(new Event('change')); }
+    });
+  </script>
+  <script src="/static/js/fretbot-chat-widget.js"></script>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Kissan Connect · Built for Indian Farmers</span>
+      <span style="display:flex;gap:20px;">
+        <a href="/">Home</a>
+        <a href="/crop-predictor">Crop Rec</a>
+        <a href="/disease-predictor">Disease</a>
+        <a href="/yield-predictor">Yield</a>
+        <a href="/about">About</a>
+      </span>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yield Predictor  -Kissan Connect</title>
+  <link rel="stylesheet" href="/static/css/global.css">
+  <style>
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .result-card {
+      margin-top: 32px;
+      padding: 36px 28px;
+      border-radius: var(--radius-md);
+      background: rgba(76, 175, 80, 0.05);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      text-align: center;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .yield-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent-neon);
+      display: block;
+      margin: 12px 0 4px;
+      text-shadow: 0 0 20px rgba(118, 255, 3, 0.3);
+    }
+
+    .yield-unit {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .error-card {
+      background: rgba(231, 76, 60, 0.08);
+      border-color: rgba(231, 76, 60, 0.25);
+    }
+
+    .error-card .yield-num {
+      color: #ff6b6b;
+      font-size: 1.2rem;
+    }
+
+    .disclaimer {
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      margin-top: 16px;
+    }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid rgba(255, 255, 255, 0.08);
+      border-top-color: var(--accent-green);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script src="/static/js/navbar-component.js"></script>
+
+  <div class="main-container">
+    <h1>  Yield Predictor</h1>
+    <p style="color:var(--text-muted); margin-bottom:40px; max-width:600px;">
+      Select your state, crop, season and cultivated area. Our Gradient Boosting model will estimate your expected
+      production in tonnes.
+    </p>
+
+    <div class="glass-panel" style="max-width:680px; margin:0 auto;">
+      <form method="POST" id="yieldForm">
+        <div class="form-group">
+          <label>State</label>
+          <select name="state" required>
+            <option value="" disabled selected>Select a State</option>
+            <option>Andaman and Nicobar Islands</option>
+            <option>Andhra Pradesh</option>
+            <option>Arunachal Pradesh</option>
+            <option>Assam</option>
+            <option>Bihar</option>
+            <option>Chandigarh</option>
+            <option>Chhattisgarh</option>
+            <option>Dadra and Nagar Haveli</option>
+            <option>Goa</option>
+            <option>Gujarat</option>
+            <option>Haryana</option>
+            <option>Himachal Pradesh</option>
+            <option>Jammu and Kashmir</option>
+            <option>Jharkhand</option>
+            <option>Karnataka</option>
+            <option>Kerala</option>
+            <option>Madhya Pradesh</option>
+            <option>Maharashtra</option>
+            <option>Manipur</option>
+            <option>Meghalaya</option>
+            <option>Mizoram</option>
+            <option>Nagaland</option>
+            <option>Odisha</option>
+            <option>Puducherry</option>
+            <option>Punjab</option>
+            <option>Rajasthan</option>
+            <option>Sikkim</option>
+            <option>Tamil Nadu</option>
+            <option>Telangana</option>
+            <option>Tripura</option>
+            <option>Uttar Pradesh</option>
+            <option>Uttarakhand</option>
+            <option>West Bengal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Crop</label>
+          <select name="crop" required>
+            <option value="" disabled selected>Select a Crop</option>
+            <option>Arecanut</option>
+            <option>Other Kharif pulses</option>
+            <option>Rice</option>
+            <option>Banana</option>
+            <option>Cashewnut</option>
+            <option>Coconut</option>
+            <option>Dry ginger</option>
+            <option>Sugarcane</option>
+            <option>Sweet potato</option>
+            <option>Tapioca</option>
+            <option>Black pepper</option>
+            <option>Dry chillies</option>
+            <option>other oilseeds</option>
+            <option>Turmeric</option>
+            <option>Maize</option>
+            <option>Moong(Green Gram)</option>
+            <option>Urad</option>
+            <option>Arhar/Tur</option>
+            <option>Groundnut</option>
+            <option>Sunflower</option>
+            <option>Bajra</option>
+            <option>Castor seed</option>
+            <option>Cotton(lint)</option>
+            <option>Horse-gram</option>
+            <option>Jowar</option>
+            <option>Korra</option>
+            <option>Ragi</option>
+            <option>Tobacco</option>
+            <option>Gram</option>
+            <option>Wheat</option>
+            <option>Masoor</option>
+            <option>Sesamum</option>
+            <option>Linseed</option>
+            <option>Safflower</option>
+            <option>Onion</option>
+            <option>other misc. pulses</option>
+            <option>Samai</option>
+            <option>Small millets</option>
+            <option>Coriander</option>
+            <option>Potato</option>
+            <option>Other Rabi pulses</option>
+            <option>Soyabean</option>
+            <option>Beans &amp; Mutter(Vegetable)</option>
+            <option>Bhindi</option>
+            <option>Brinjal</option>
+            <option>Citrus Fruit</option>
+            <option>Cucumber</option>
+            <option>Grapes</option>
+            <option>Mango</option>
+            <option>Orange</option>
+            <option>other fibres</option>
+            <option>Other Fresh Fruits</option>
+            <option>Other Vegetables</option>
+            <option>Papaya</option>
+            <option>Pome Fruit</option>
+            <option>Tomato</option>
+            <option>Rapeseed &amp;Mustard</option>
+            <option>Mesta</option>
+            <option>Cowpea(Lobia)</option>
+            <option>Lemon</option>
+            <option>Pome Granet</option>
+            <option>Sapota</option>
+            <option>Cabbage</option>
+            <option>Peas (vegetable)</option>
+            <option>Niger seed</option>
+            <option>Bottle Gourd</option>
+            <option>Sannhamp</option>
+            <option>Varagu</option>
+            <option>Garlic</option>
+            <option>Ginger</option>
+            <option>Oilseeds total</option>
+            <option>Pulses total</option>
+            <option>Jute</option>
+            <option>Peas &amp; beans (Pulses)</option>
+            <option>Blackgram</option>
+            <option>Paddy</option>
+            <option>Pineapple</option>
+            <option>Barley</option>
+            <option>Khesari</option>
+            <option>Guar seed</option>
+            <option>Moth</option>
+            <option>Other Cereals &amp; Millets</option>
+            <option>Cond-spcs other</option>
+            <option>Turnip</option>
+            <option>Carrot</option>
+            <option>Redish</option>
+            <option>Cardamom</option>
+            <option>Rubber</option>
+            <option>Bitter Gourd</option>
+            <option>Drum Stick</option>
+            <option>Jack Fruit</option>
+            <option>Snak Guard</option>
+            <option>Pump Kin</option>
+            <option>Tea</option>
+            <option>Coffee</option>
+            <option>Cauliflower</option>
+            <option>Other Citrus Fruit</option>
+            <option>Water Melon</option>
+            <option>Total foodgrain</option>
+            <option>Kapas</option>
+            <option>Colocosia</option>
+            <option>Lentil</option>
+            <option>Bean</option>
+            <option>Apple</option>
+            <option>Peach</option>
+            <option>Pear</option>
+            <option>Plums</option>
+            <option>Litchi</option>
+            <option>Ber</option>
+            <option>Other Dry Fruit</option>
+            <option>Jute &amp; mesta</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Season</label>
+          <select name="season" required>
+            <option value="" disabled selected>Select a Season</option>
+            <option value="Kharif     ">Kharif (Jun–Sep)</option>
+            <option value="Rabi       ">Rabi (Oct–Mar)</option>
+            <option value="Summer     ">Summer (Apr–Jun)</option>
+            <option value="Winter     ">Winter (Nov–Feb)</option>
+            <option value="Whole Year ">Whole Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Cultivated Area (hectares)</label>
+          <input type="number" name="area" step="0.01" min="0.01" placeholder="e.g. 2.5" required>
+        </div>
+
+        <div id="loadingDiv" style="display:none; text-align:center; margin:20px 0;">
+          <div class="spinner"></div>
+          <p style="color:var(--text-muted); font-size:0.9rem;">Calculating yield estimate…</p>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submitBtn">📊 Predict Yield</button>
+      </form>
+
+      {% if error %}
+      <div class="result-card error-card">
+        <span style="font-size:2rem;"> </span>
+        <span class="yield-num" style="font-size:1.1rem;">{{ error }}</span>
+      </div>
+
+      {% elif prediction is not none %}
+      <div class="result-card">
+        <span
+          style="color:var(--text-muted); font-size:0.82rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;">Estimated
+          Production</span>
+        <span class="yield-num">{{ prediction }}</span>
+        <span class="yield-unit">tonnes</span>
+        <p class="disclaimer">* Based on historical crop production data for India. Actual yield varies with weather,
+          farming practices and soil health.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('yieldForm').addEventListener('submit', function () {
+      document.getElementById('loadingDiv').style.display = 'block';
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Calculating…';
+    });
+  </script>
+  <script src="/static/js/fretbot-chat-widget.js"></script>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Kissan Connect · Built for Indian Farmers</span>
+      <span style="display:flex;gap:20px;">
+        <a href="/">Home</a>
+        <a href="/crop-predictor">Crop Rec</a>
+        <a href="/disease-predictor">Disease</a>
+        <a href="/yield-predictor">Yield</a>
+        <a href="/about">About</a>
+      </span>
+    </div>
+  </footer>
+
+</body>
+
+</html>
