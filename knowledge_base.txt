@@ -1,0 +1,74 @@
+Q: Kissan Connect kya hai?
+A: Kissan Connect ek AI-powered agricultural platform hai jo Indian farmers ki madad karta hai. Isme teen main features hain: Crop Recommendation (soil data ke basis par best crop suggest karta hai), Disease Detector (photo se crop disease identify karta hai), aur Yield Predictor (harvest estimate karta hai). Aap chatbot se bhi farming ke baare mein questions pooch sakte ho.
+
+Q: Crop recommendation kaise kaam karta hai?
+A: Crop Recommendation feature aapki mitti (soil) ka analysis karta hai. Aapko sirf N (Nitrogen), P (Phosphorus), K (Potassium), temperature, humidity, pH aur rainfall enter karna hoga. Hamar AI model in values ke basis par aapke liye sabse acchi crop suggest karega. State select karne par NPK auto-fill ho jaate hain.
+
+Q: Disease predictor kaise use kare?
+A: Disease Predictor use karne ke liye: 1) Disease Predictor page par jaao 2) Apni crop ki photo upload karo (drag & drop ya click karke) 3) "Predict Disease" button dabao. AI aapki photo analyze karega aur disease identify karega saath mein confidence score aur treatment suggestions bhi dega.
+
+Q: Yield predictor kya hai?
+A: Yield Predictor aapki potential crop yield estimate karta hai. Aapko State, Crop type, Season aur Area (hectares mein) enter karna hoga. Hamar Gradient Boosting model predict karega ki aap kitna produce kar sakte ho. Yeh planning aur financial decisions ke liye bahut useful hai.
+
+Q: PM Kisan Samman Nidhi kya hai?
+A: PM Kisan Samman Nidhi scheme ke under, eligible farmers ko har saal 6,000 rupaye milte hain  -teen equal installments mein (2,000 rupaye har baar). Yeh direct bank transfer hota hai. Small aur marginal farmers jinka land 2 hectare tak hai, yeh scheme ke liye eligible hain. Registration ke liye apne nearest CSC center ya PM Kisan portal par jaao: https://pmkisan.gov.in
+
+Q: Fasal bima yojana kya hai?
+A: Pradhan Mantri Fasal Bima Yojana (PMFBY) ek crop insurance scheme hai. Farmers ko bahut kam premium pay karna padta hai  -Kharif crops ke liye 2%, Rabi ke liye 1.5%, aur commercial crops ke liye 5%. Natural disasters, pests, ya disease se fasal kharab hone par compensation milta hai. Registration apne bank ya insurance company se karo.
+
+Q: Kisan Credit Card kya hai?
+A: Kisan Credit Card (KCC) farmers ko affordable credit deta hai farming ke liye. 7% interest rate per annum hai, aur agar time par repay karo toh 2% interest subvention milta hai  -matlab effective rate sirf 5%. Seeds, fertilizers, pesticides, equipment sab ke liye use kar sakte ho. Apne kisi bhi bank mein apply karo.
+
+Q: Soil health card scheme kya hai?
+A: Soil Health Card Scheme ke under government free mein aapki mitti test karti hai  -har 3 saal mein. Card mein N, P, K aur secondary micronutrients ki information hoti hai saath mein fertilizer recommendations bhi. Isse aap fertilizer ka sahi amount use kar sakte ho jo cost bachata hai aur yield badhata hai. Apne nearest Krishi Vigyan Kendra (KVK) par jaao.
+
+Q: Kisaan bot se kya poochh sakte hain?
+A: Kisaan bot se aap poochh sakte ho: farming best practices, crop disease symptoms aur treatment, fertilizer recommendations, government schemes ki jankari, mausam aur irrigation tips, market prices, storage advice, aur Kissan Connect platform use karne ke baare mein help. Hinglish mein poochho, main samajhunga!
+
+Q: Nitrogen phosphorus potassium kya hota hai kheti mein?
+A: NPK soil ke teen main nutrients hain. Nitrogen (N) plants ki growth aur green leaves ke liye zaroori hai. Phosphorus (P) roots development aur flowering mein help karta hai. Potassium (K) overall plant health, disease resistance aur fruit quality ke liye important hai. Soil test karake hi sahi amount use karo  -zyada bhi nuksan karta hai.
+
+Q: pH kya hota hai aur kitna hona chahiye?
+A: pH soil ki acidity ya alkalinity measure karta hai (scale 0-14). 7.0 neutral hai. Most crops ke liye 6.0-7.5 ideal hai. pH kam hone par lime add karo, zyada hone par sulfur use karo. Groundnut aur potato thoda acidic (5.5-6.0) prefer karte hain, jabke wheat aur barley slightly alkaline (6.5-7.5) mein acche hote hain.
+
+Q: Kharif aur Rabi crops mein kya fark hai?
+A: Kharif crops monsoon season (June-September) mein ughte hain jaise rice, maize, cotton, soyabean, groundnut, bajra. Rabi crops winter (October-March) mein ughte hain jaise wheat, gram, mustard, lentil, peas. Summer crops April-June mein hote hain jaise watermelon, cucumber. Season ke hisaab se crop choose karna yield maximize karta hai.
+
+Q: Drip irrigation kya hai?
+A: Drip irrigation system mein paani directly plant roots tak diya jaata hai slow drops mein. Isse 40-60% paani ki bachat hoti hai compared to flood irrigation. Fertilizers bhi paani ke saath diye ja sakte hain (fertigation). Initial cost zyada hai lekin long term mein cost-effective hai. Government drip irrigation ke liye subsidy bhi deti hai  -apne state agriculture department se poochho.
+
+Q: Organic farming kaise shuru kare?
+A: Organic farming shuru karne ke liye: 1) Certification ke liye APEDA ya state agency se contact karo 2) Chemical fertilizers aur pesticides band karo 3) Compost, vermicompost, green manure use karo 4) Neem-based pesticides aur bio-pesticides use karo 5) Crop rotation aur intercropping practice karo. Paramparagat Krishi Vikas Yojana scheme ke under 50,000 rupaye per hectare support milta hai.
+
+Q: Mandi price kahan dekhe?
+A: Current mandi prices ke liye: Agmarknet portal (agmarknet.nic.in) par jaao, ya eNAM (enam.gov.in) check karo jo National Agriculture Market hai. State government ke agriculture department websites par bhi prices hoti hain. Kisaan Call Center: 1800-180-1551 (toll-free) par call karke bhi pata kar sakte ho.
+
+Q: Crop rotation kya hota hai aur kyu karna chahiye?
+A: Crop rotation matlab har season mein alag crop ugana same zameen par. Isse fayde hain: 1) Soil nutrients replenish hote hain  -legumes nitrogen fix karti hain 2) Pests aur diseases ka cycle toot jaata hai 3) Soil structure improve hoti hai 4) Overall yield 10-25% tak badh sakti hai. Example: Wheat ke baad moong, phir rice rotate karo.
+
+Q: Vermicompost kaise banate hain?
+A: Vermicompost banane ke liye: 1) Ek shallow box/pit banao (3x1x1 feet) 2) Cow dung, kitchen waste, dry leaves daalo 3) Red wiggler earthworms daalo (1 kg worms per 10 kg waste) 4) Nami rakho (squeeze karo toh 1-2 drops paani aaye) 5) 45-60 din mein ready ho jaata hai. Vermicompost regular urea se 4-5 guna zyada effective hai aur soil health improve karta hai.
+
+Q: Drip aur sprinkler irrigation mein kya fark hai?
+A: Drip irrigation mein paani seedha roots tak jaata hai  -water efficiency 90%+. Vegetables, fruits, sugarcane ke liye best hai. Sprinkler mein paani rain ki tarah girtaa hai  -wheat, groundnut ke liye suitable. Drip ki cost zyada hai lekin fertilizer (fertigation) bhi save hota hai. Government drip irrigation par 55-75% subsidy deti hai PM Micro Irrigation Fund ke under.
+
+Q: Kharif crops ki list aur sowing time kya hai?
+A: Main Kharif crops aur unki sowing: Rice (June-July), Maize (June-July), Cotton (April-May), Soyabean (June-July), Groundnut (June-July), Bajra (June-July), Jowar (June-July), Moong (June-July), Urad (June-July), Sugarcane (February-March). Kharif crops monsoon par depend karti hain aur October-November mein harvest hoti hain.
+
+Q: Rabi crops ki list aur sowing time kya hai?
+A: Main Rabi crops: Wheat (October-December), Gram/Chickpea (October-November), Mustard (October-November), Barley (October-November), Lentil/Masoor (October-November), Peas (October-November). Rabi crops winter mein grow hoti hain aur March-April mein harvest hoti hain. Irrigation ki zaroorat hoti hai kyunki monsoon nahi hota.
+
+Q: Integrated Pest Management (IPM) kya hai?
+A: IPM ek sustainable approach hai jisme chemical pesticides kam se kam use hote hain. Steps: 1) Regular field monitoring karo 2) Beneficial insects (ladybugs, spiders) protect karo 3) Bio-pesticides use karo  -Neem oil, Bacillus thuringiensis (Bt) 4) Pheromone traps lagao 5) Crop rotation karo. IPM se pesticide cost 40-60% tak kam hoti hai aur environment safe rehta hai.
+
+Q: MSP kya hota hai?
+A: Minimum Support Price (MSP) government ka guaranteed price hota hai specific crops ke liye. Agar market mein price MSP se neeche jaaye, toh government MSP par khareedti hai. 2024-25 mein kuch MSPs: Wheat ₹2,275/quintal, Rice ₹2,300/quintal, Soyabean ₹4,892/quintal, Cotton ₹7,521/quintal. MSP ki jankari ke liye cacp.dac.gov.in par jaao ya Kisan Call Center: 1800-180-1551.
+
+Q: Biopesticides kya hain aur kaise use kare?
+A: Biopesticides natural organisms ya unke products se bane hain. Types: 1) Neem-based  -Azadirachtin sabse popular, almost sabhi pests ke liye 2) Bt (Bacillus thuringiensis)  -caterpillars aur borers ke liye 3) Trichoderma  -soil-borne fungal diseases ke liye 4) Beauveria bassiana  -white grubs ke liye. Chemical pesticides se safe hain, residue nahi rehta. Apply karo: evening mein, 10-15 din mein repeat karo.
+
+Q: Soil testing kahan aur kaise karaye?
+A: Soil testing ke liye: 1) Apne state ke government Soil Testing Laboratory mein jaao (free ya nominal charge) 2) Krishi Vigyan Kendra (KVK) se contact karo 3) Private labs bhi available hain (₹200-500 per sample). Sample kaise lo: 6-9 inch gehraai se, field ke 10-15 jagah se thoda-thoda mitti lo, mix karo, 500g bhejo. Report mein NPK, pH, micronutrients sab aata hai.
+
+Q: PM Kisan app kaise use kare?
+A: PM Kisan mobile app Google Play Store par available hai. Isse aap: 1) Registration status check karo 2) Payment history dekho 3) Installment kab aayi pata karo 4) Beneficiary list mein naam check karo. Website: pmkisan.gov.in. Koi problem hai toh helpline: 155261 ya 011-24300606 par call karo.
